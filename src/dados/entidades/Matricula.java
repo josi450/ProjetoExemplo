@@ -1,9 +1,20 @@
 package dados.entidades;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class Matricula {
     
+    public Matricula(){}
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     
     private LocalDateTime data;
@@ -11,7 +22,8 @@ public class Matricula {
     private Boolean aprovado;
     
     private Aluno aluno;
-    
+   
+    @ManyToOne
     private Disciplina disciplina;
 
     public Integer getId() {
@@ -52,6 +64,31 @@ public class Matricula {
 
     public void setDisciplina(Disciplina disciplina) {
         this.disciplina = disciplina;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Matricula other = (Matricula) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
 }
